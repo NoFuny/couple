@@ -18,28 +18,36 @@ public class Cheker : MonoBehaviour
         chekObject = FindObjectOfType<ChekObject>();
     }
 
+    private void Update()
+    {
+        if (_Object == null && !_freePosiciob) _freePosiciob = true;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (_freePosiciob)
         {
-            Debug.Log("2323");
             _Object = other.gameObject;
             raycast.ChekerActive(_position);
+            _freePosiciob = false;
             chekObject.GetCheckObjekt(numberCheker, _Object);
         }
 
     }
 
-    private void OnTriggerExit(Collider other)
+
+
+    public void PushObject()
     {
-        if (!_freePosiciob)
+        Debug.Log("Push");
+        _freePosiciob = true;
+        if (_Object != null)
         {
+            _Object.GetComponent<Rigidbody>().velocity = new Vector3(0, 8, -5);
             _Object = null;
             chekObject.GetCheckObjekt(numberCheker, _Object);
-            
         }
     }
+
 
 }

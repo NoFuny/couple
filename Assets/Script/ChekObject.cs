@@ -14,22 +14,24 @@ public class ChekObject : MonoBehaviour
     }
     public void ComparisonObject ()
     {
-        if (leftObject!=null && rightObject!= null)
-        {
-            if (leftObject.GetComponent<TipeObject>().typeFile == rightObject.GetComponent<TipeObject>().typeFile)
-            {
-                Destroy(leftObject);
-                Destroy(rightObject);
-            }
-        }
+        Destroy(leftObject);
+        Destroy(rightObject);      
     }
 
-    public void GetCheckObjekt(int number, GameObject gameObject)
+    public bool GetCheckObjekt(int number, GameObject gameObject)
     {
         if (number == 0) leftObject = gameObject;
         else if (number == 1) rightObject = gameObject;
-        StartCoroutine(waitTime());
-        
+        if (leftObject != null && rightObject != null)
+        {
+            if (leftObject.GetComponent<TipeObject>().typeFile == rightObject.GetComponent<TipeObject>().typeFile)
+            {
+                StartCoroutine(waitTime());
+                return true;
+            }
+            return false;  
+        }
+        return false;       
     }
     IEnumerator waitTime()
     {
