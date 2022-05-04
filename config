@@ -1,0 +1,13 @@
+[core]
+	bare = true
+	repositoryformatversion = 0
+	filemode = false
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://github.com/NoFuny/test2.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[remote "Test2"]
+	url = https://github.com/NoFuny/test2.git
+	fetch = +refs/heads/*:refs/remotes/Test2/*
+	tagopt = --no-tags
