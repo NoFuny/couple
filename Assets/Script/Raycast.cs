@@ -35,7 +35,7 @@ public class Raycast : MonoBehaviour
                 }
                 else if (hit.transform.gameObject.tag == "Cheker")
                 {
-                    hit.transform.gameObject.GetComponent<Cheker>().PushObject();
+                    //hit.transform.gameObject.GetComponent<Cheker>().PushObject();
                 }
             }
         }
@@ -70,9 +70,6 @@ public class Raycast : MonoBehaviour
             _tempGameObject = null;
         }
 
-        private void OnCollisionEnter(Collision collision)
-        {
-            Debug.Log(collision.gameObject.name);
-        }
+
     } 
 
