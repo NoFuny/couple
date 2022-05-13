@@ -24,7 +24,7 @@ public class ChekObject : MonoBehaviour
         else if (number == 1) rightObject = gameObject;
         if (leftObject != null && rightObject != null)
         {
-            if (leftObject.GetComponent<TipeObject>().typeFile == rightObject.GetComponent<TipeObject>().typeFile)
+            if (leftObject.GetComponent<TypeObject>().typeObj == rightObject.GetComponent<TypeObject>().typeObj)
             {
                 StartCoroutine(waitTime());
                 return true;

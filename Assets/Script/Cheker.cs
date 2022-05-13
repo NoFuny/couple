@@ -4,32 +4,54 @@ using UnityEngine;
 
 public class Cheker : MonoBehaviour
 {
+    private GameObject _leftObject;
+    private GameObject _rightObject;
+    private GameObject _tempObject;
+    [SerializeField] private Transform _leftTransform, _rightTranform;
 
 
-    [SerializeField] private Transform _position, _respawn;
-    private GameObject _Object;
-    private ChekObject chekObject;
-    [SerializeField] private Raycast raycast;
-    [SerializeField] int numberCheker = 0;
-
-
-    private void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        chekObject = FindObjectOfType<ChekObject>();
+        other.GetComponent<TypeObject>().ColliderObj = true;
+
+        if (other.GetComponent<TypeObject>().GrabbingObj)
+        {
+            _tempObject = other.gameObject;
+            
+        }
+
     }
 
-    private void Update()
+    private void OnTriggerExit(Collider other)
     {
+        other.GetComponent<TypeObject>().ColliderObj = false;
+        if (_leftObject == other.gameObject)
+        {
+            _leftObject = null;
+            
+        }
+    }
+   
+
+    private bool ChekPosicionTemp(GameObject ChekObj)
+    {
+        if (_leftObject == ChekObj) return true;
+        else return false;
     }
 
-
-    private void OnTriggerStay(Collider other)
+    public void ChekPosicion ()
     {
-        
-        if (other == null) Debug.Log(1212); ;
+        if (_leftObject == null && _tempObject !=null)
+        {   if (_tempObject.GetComponent<TypeObject>().ColliderObj)
+            {
+                _leftObject = _tempObject;
+                _leftObject.transform.position = _leftTransform.position;
+                _leftObject.transform.rotation = _leftTransform.rotation;
+                _leftObject.GetComponent<Rigidbody>().isKinematic = true;
+                _leftObject.GetComponent<Rigidbody>().freezeRotation = true;
+            }
+        }
+
     }
-
-
-
 
 }
