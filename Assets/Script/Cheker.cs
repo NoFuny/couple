@@ -8,7 +8,7 @@ public class Cheker : MonoBehaviour
     private GameObject _rightObject;
     private GameObject _tempObject;
     [SerializeField] private Transform _leftTransform, _rightTranform;
-    private Collider _collider;
+    [SerializeField] private SceneManagerLvl sceneManager;
 
 
     private void OnTriggerEnter(Collider other)
@@ -39,6 +39,7 @@ public class Cheker : MonoBehaviour
         else return false;
     }
 
+    // Постановка объекта в поле для сравнения
     public void ChekPosicion ()
     {
         if (_leftObject == null || _leftObject == _tempObject)
@@ -56,17 +57,19 @@ public class Cheker : MonoBehaviour
 
     }
 
+    // Функция сравнения объектов
     private void Chek()
     {
         if (_rightObject.GetComponent<TypeObject>().typeObj == _leftObject.GetComponent<TypeObject>().typeObj && _rightObject.GetComponent<TypeObject>().ColliderObj)
 
         {
             PosicionChek(_rightObject, _rightTranform);
+            sceneManager.ChekTrue();
             StartCoroutine(waitTime());
         }
         else if (_rightObject.GetComponent<TypeObject>().ColliderObj)
         {
-            _rightObject.GetComponent<Rigidbody>().AddForce(Random.Range(-200,200),-1000,-1000);
+            _rightObject.GetComponent<Rigidbody>().AddForce(Random.Range(-200,200),-1000,-1500);
             _rightObject = null;
         }
     }
@@ -83,11 +86,14 @@ public class Cheker : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         ComparisonObject();
     }
+
+    //удаление объекто и освобождения под них места.
     private void ComparisonObject()
     {
         Destroy(_leftObject);
         Destroy(_rightObject);
         _leftObject = null;
         _rightObject = null;
+        
     }
 }
