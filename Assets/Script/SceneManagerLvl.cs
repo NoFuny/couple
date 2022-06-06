@@ -8,7 +8,7 @@ public class SceneManagerLvl : MonoBehaviour
 {
     [SerializeField] float timer = 0;
     [SerializeField] Text timerText, endText;
-    [SerializeField] GameObject endGame;
+    [SerializeField] GameObject endGame, nextGameButton, AddButton;
     [SerializeField] int numberLVL;
     private int _minutes;
     private int _seconds;
@@ -39,6 +39,7 @@ public class SceneManagerLvl : MonoBehaviour
             {
                 endText.text = "Поражение!";
                 EndGameWindow(true);
+                AddButton.SetActive(true);
 
             }
         }
@@ -63,18 +64,42 @@ public class SceneManagerLvl : MonoBehaviour
             
             endText.text = "Победа!";
             EndGameWindow(true);
+            SavedLvl();
+            nextGameButton.SetActive(true);
         }
-        Debug.Log(_doubleObj);
+
+    }
+    private void SavedLvl()
+    {
+        if(PlayerPrefs.GetInt("SaveLvl")<= numberLVL)
+        { 
+            PlayerPrefs.SetInt("SaveLvl", numberLVL);
+            PlayerPrefs.Save();
+        }
     }
 
     public void onClickRestart()
     {
         SceneManager.LoadScene(numberLVL);
+        onClickPause(false);
 
+    }
+    
+    public void onClickNextGame()
+    {
+        SceneManager.LoadScene(numberLVL+1);
+        onClickPause(false);
     }
     
     public void onClickMainMenu()
     {
         SceneManager.LoadScene(0);
+        onClickPause(false);
+    }
+
+    public void onClickPause(bool isPuase)
+    {
+        if (isPuase) Time.timeScale = 0;
+        else Time.timeScale = 1;
     }
 }

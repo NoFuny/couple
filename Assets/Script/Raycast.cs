@@ -9,17 +9,20 @@ public class Raycast : MonoBehaviour
     [SerializeField] private Cheker _cheker;
     [SerializeField] int RadiusPlane = 75;
     public float step = 2;
+    AudioSource audio;
+    public AudioClip clickSound;
 
     void Start()
     {
         _mainCamera = Camera.main;
-        
+        audio = GetComponent<AudioSource>();
     }
     void Update()
     {
 
         if (Input.GetMouseButtonDown(0))
         {
+           // audio.PlayOneShot(clickSound);
             //    Выпускает луч и проверяет объет, если обект доступен для хвататние записывает его в переменную
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

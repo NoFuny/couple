@@ -2,16 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuSpawn : MonoBehaviour
 {
     public GameObject[] arrayGameObj;
     [SerializeField] private Transform pointSpawn;
-    
+    [SerializeField] private Button[] lvlButton;
+    [SerializeField] AudioClip clickSound;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(Spawn());
+        int nowLvl = PlayerPrefs.GetInt("SaveLvl");
+        for (int i = 1; i <= nowLvl; i++)
+        {
+            lvlButton[i].interactable = true;
+        }
+        
     }
 
 
@@ -42,4 +51,5 @@ public class MenuSpawn : MonoBehaviour
     {
         SceneManager.LoadScene(lvl);
     }
+
 }
