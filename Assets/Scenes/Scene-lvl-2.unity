@@ -1840,6 +1840,7 @@ MonoBehaviour:
   _cheker: {fileID: 1140512411}
   RadiusPlane: 75
   step: 2
+  clickSound: {fileID: 8300000, guid: 1322df7c304ed79498b616d80070d69c, type: 3}
 --- !u!114 &963194231
 MonoBehaviour:
   m_ObjectHideFlags: 0

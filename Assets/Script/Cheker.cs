@@ -69,8 +69,10 @@ public class Cheker : MonoBehaviour
         }
         else if (_rightObject.GetComponent<TypeObject>().ColliderObj)
         {
+            sceneManager.SoundClickNo();
             _rightObject.GetComponent<Rigidbody>().AddForce(Random.Range(-200,200),-1000,-1500);
             _rightObject = null;
+            
         }
     }
 

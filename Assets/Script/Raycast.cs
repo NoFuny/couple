@@ -9,20 +9,21 @@ public class Raycast : MonoBehaviour
     [SerializeField] private Cheker _cheker;
     [SerializeField] int RadiusPlane = 75;
     public float step = 2;
-    AudioSource audio;
-    public AudioClip clickSound;
+    SceneManagerLvl sceneManagerLvl;
+
 
     void Start()
     {
         _mainCamera = Camera.main;
-        audio = GetComponent<AudioSource>();
+        sceneManagerLvl = FindObjectOfType<SceneManagerLvl>();
+
     }
     void Update()
-    {
+    { 
 
         if (Input.GetMouseButtonDown(0))
         {
-           // audio.PlayOneShot(clickSound);
+            
             //    Выпускает луч и проверяет объет, если обект доступен для хвататние записывает его в переменную
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -30,9 +31,11 @@ public class Raycast : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Grabbing")
                 {
+                    sceneManagerLvl.SoundClickObj();
                     _enterObject = hit.transform.gameObject;
                     _enterObject.GetComponent<TypeObject>().GrabbingObj = true;
-                     EnterObject(_enterObject, true);
+                    EnterObject(_enterObject, true);
+                    
                 }
             }
         }

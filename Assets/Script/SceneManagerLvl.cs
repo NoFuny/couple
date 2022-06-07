@@ -14,11 +14,14 @@ public class SceneManagerLvl : MonoBehaviour
     private int _seconds;
     private string _zero;
     [SerializeField] private int _doubleObj;
+    AudioSource audio;
+    public AudioClip clickSound, noSound, menuSound;
 
 
     private void Start()
     {
         _doubleObj = FindObjectsOfType<TypeObject>().Length/2;
+        audio = FindObjectOfType<AudioSource>();
     }
 
     void Update()
@@ -26,6 +29,18 @@ public class SceneManagerLvl : MonoBehaviour
         TimerGame();
     }
 
+    public void SoundClickObj()
+    {
+        audio.PlayOneShot(clickSound);
+    }
+    public void SoundClickNo()
+    {
+        audio.PlayOneShot(noSound);
+    }
+    public void SoundClickMenu()
+    {
+        audio.PlayOneShot(menuSound);
+    }
     private void TimerGame()
     {
         if (!endGame.activeSelf)
