@@ -16,12 +16,17 @@ public class SceneManagerLvl : MonoBehaviour
     [SerializeField] private int _doubleObj;
     AudioSource audio;
     public AudioClip clickSound, noSound, menuSound;
+    private YandexSDK sdk;
+
 
 
     private void Start()
     {
-        _doubleObj = FindObjectsOfType<TypeObject>().Length/2;
+        _doubleObj = FindObjectsOfType<TypeObject>().Length / 2;
         audio = FindObjectOfType<AudioSource>();
+        sdk = YandexSDK.instance;
+        sdk.ShowInterstitial();
+        sdk.onRewardedAdReward += onClickAddTime;
     }
 
     void Update()
@@ -66,10 +71,13 @@ public class SceneManagerLvl : MonoBehaviour
         endGame.SetActive(viewWindow);
     }
 
-    public void onClickAddTime()
+    public void onClickAddTime(string parametr)
     {
-        timer += 60;
-        EndGameWindow(false);
+        if (parametr == "addTime")
+        {
+            timer += 60;
+            EndGameWindow(false);
+        }
     }
     public void ChekTrue()
     {

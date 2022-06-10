@@ -19,11 +19,9 @@ public class Raycast : MonoBehaviour
 
     }
     void Update()
-    { 
-
-        if (Input.GetMouseButtonDown(0))
+    {
+            if (Input.GetMouseButtonDown(0))
         {
-            
             //    Выпускает луч и проверяет объет, если обект доступен для хвататние записывает его в переменную
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -55,11 +53,11 @@ public class Raycast : MonoBehaviour
         }
 
     }
-    
+
+
         private Vector3 PixelCamera()
     {
-
-        float _posicionX ,_posicionY;
+          float _posicionX ,_posicionY;
         if (Input.mousePosition.x > Screen.width - RadiusPlane) _posicionX = Screen.width - RadiusPlane;
         else if (Input.mousePosition.x < RadiusPlane) _posicionX = RadiusPlane;
         else _posicionX = Input.mousePosition.x;

@@ -5226,5 +5226,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8692533920383884638, guid: 17aefbd57aee6bc4796a4570207abc40, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17aefbd57aee6bc4796a4570207abc40, type: 3}
