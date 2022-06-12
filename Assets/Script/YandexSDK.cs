@@ -1,144 +1,145 @@
-﻿using System;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-public class YandexSDK : MonoBehaviour {
-    public static YandexSDK instance;
-    [DllImport("__Internal")]
-    private static extern void GetUserData();
-    [DllImport("__Internal")]
-    private static extern void ShowFullscreenAd();
-    /// <summary>
-    /// Returns an int value which is sent to index.html
-    /// </summary>
-    /// <param name="placement"></param>
-    /// <returns></returns>
-    [DllImport("__Internal")]
-    private static extern int ShowRewardedAd(string placement);
-    [DllImport("__Internal")]
-    private static extern void GerReward();
-    [DllImport("__Internal")]
-    private static extern void AuthenticateUser();
-    [DllImport("__Internal")]
-    private static extern void InitPurchases();
-    [DllImport("__Internal")]
-    private static extern void Purchase(string id);
-
-    public UserData user;
-    public event Action onUserDataReceived;
-
-    public event Action onInterstitialShown;
-    public event Action<string> onInterstitialFailed;
-    /// <summary>
-    /// Пользователь открыл рекламу
-    /// </summary>
-    public event Action<int> onRewardedAdOpened;
-    /// <summary>
-    /// Пользователь должен получить награду за просмотр рекламы
-    /// </summary>
-    public event Action<string> onRewardedAdReward;
-    /// <summary>
-    /// Пользователь закрыл рекламу
-    /// </summary>
-    public event Action<int> onRewardedAdClosed;
-    /// <summary>
-    /// Вызов/просмотр рекламы повлёк за собой ошибку
-    /// </summary>
-    public event Action<string> onRewardedAdError;
-    /// <summary>
 
 
-    public Queue<int> rewardedAdPlacementsAsInt = new Queue<int>();
-    public Queue<string> rewardedAdsPlacements = new Queue<string>();
-
-    private void Awake() {
-        if (instance == null) {
-            instance = this;
-        }
-        else {
-            Destroy(gameObject);
+public class YandexSDK : MonoBehaviour
+{
+    // Создание SINGLETON
+    private static YandexSDK _instance;
+    public static YandexSDK Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = GameObject.FindObjectOfType<YandexSDK>();
+            
+            return _instance;
         }
     }
-
-    /// <summary>
-    /// Call this to show interstitial ad. Don't call frequently. There is a 3 minute delay after each show.
-    /// </summary>
-    public void ShowInterstitial() {
-        ShowFullscreenAd();
-    }
-
-    /// <summary>
-    /// Call this to show rewarded ad
-    /// </summary>
-    /// <param name="placement"></param>
-    public void ShowRewarded(string placement) {
-        rewardedAdPlacementsAsInt.Enqueue(ShowRewardedAd(placement));
-        rewardedAdsPlacements.Enqueue(placement);
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+       
     }
     
-    /// <summary>
-    /// Call this to receive user data
-    /// </summary>
+    UserGameData UGD;
+    private UserData UD;
+
+    public UserGameData GetUserGameData => UGD;
+
+    public UserData GetUserData => UD;
+    
+    
+    [DllImport("__Internal")]
+    private static extern void Auth();    // Авторизация - внешняя функция для связи с плагином
+    [DllImport("__Internal")]
+    private static extern void ShowCommonADV();    // Показ обычной рекламы - внешняя функция для связи с плагином
+    [DllImport("__Internal")]
+    private static extern void GetData();    // Получение данных - внешняя функция для связи с плагином
+    [DllImport("__Internal")]
+    private static extern void SetData(string data);    // Отправка данных - внешняя функция для связи с плагином
+    [DllImport("__Internal")]
+    private static extern void ShowRewardADV();    // Показ рекламы с наградой - внешняя функция для связи с плагином
+    [DllImport("__Internal")]
+    private static extern void GetLeaderBoardEntries();
+    [DllImport("__Internal")]
+    private static extern void SetLeaderBoard(int score); 
+    
+    
+    
+    public event Action AuthSuccess;    //События
+    public event Action DataGet;    //События
+    public event Action RewardGet;  //События
+    public event Action<string> LeaderBoardReady; 
 
 
-    /// <summary>
-    /// Callback from index.html
-    /// </summary>
-    public void OnInterstitialShown() {
-        onInterstitialShown();
+    public void Authenticate()    //    Авторизация
+    {
+        Auth();
     }
 
-    /// <summary>
-    /// Callback from index.html
-    /// </summary>
-    /// <param name="error"></param>
-    public void OnInterstitialError(string error) {
-        onInterstitialFailed(error);
+    public void GettingData()    // Получение данных
+    {
+        GetData();
     }
 
-    /// <summary>
-    /// Callback from index.html
-    /// </summary>
-    /// <param name="placement"></param>
-    public void OnRewardedOpen(int placement) {
-        onRewardedAdOpened(placement);
+    public void SettingData(string data)    // Сохранение данных
+    {
+        SetData(data);
     }
 
-    /// <summary>
-    /// Callback from index.html
-    /// </summary>
-    /// <param name="placement"></param>
-    public void OnRewarded(int placement) {
-        if (placement == rewardedAdPlacementsAsInt.Dequeue()) {
-            onRewardedAdReward.Invoke(rewardedAdsPlacements.Dequeue());
-        }
+    public void getLeaderEntries()
+    {
+        GetLeaderBoardEntries();
     }
 
-    /// <summary>
-    /// Callback from index.html
-    /// </summary>
-    /// <param name="placement"></param>
-    public void OnRewardedClose(int placement) {
-        onRewardedAdClosed(placement);
+    public void setLeaderScore(int score)
+    {
+        SetLeaderBoard(score);
     }
 
-    /// <summary>
-    /// Callback from index.html
-    /// </summary>
-    /// <param name="placement"></param>
-    public void OnRewardedError(string placement) {
-        onRewardedAdError(placement);
-        rewardedAdsPlacements.Clear();
-        rewardedAdPlacementsAsInt.Clear();
+    public void BoardEntriesReady(string _data)
+    {
+        LeaderBoardReady?.Invoke(_data);
     }
+
+    public void ShowCommonAdvertisment()    // Показ обычной рекламы
+    {
+        ShowCommonADV();
+    }
+
+    public void ShowRewardAdvertisment()    // Показ рекламы с наградой
+    {
+        ShowRewardADV();
+    }
+
+    
+    public void AuthenticateSuccess(string data)    // Авторизация успешно пройдена
+    {
+        UD.Name = data;
+        AuthSuccess?.Invoke();
+    }
+    
+    public void DataGetting(string data) // Данные получены
+    {
+        UserDataSaving UDS = new UserDataSaving();
+        UDS = JsonUtility.FromJson<UserDataSaving>(data);
+        UGD = JsonUtility.FromJson<UserGameData>(UDS.data);
+        DataGet?.Invoke();
+    }
+    
+    public void RewardGetting() // Реклама просмотрена
+    {
+        RewardGet?.Invoke();
+    }
+
+
 
 }
 
-public struct UserData {
-    public string id;
-    public string name;
-    public string avatarUrlSmall;
-    public string avatarUrlMedium;
-    public string avatarUrlLarge;
+[Serializable]
+public class UserData
+{
+    public string Name;
+    public string image;
 }
+
+[Serializable]
+public class UserGameData
+{
+    public UserGameData(int coin)
+    {
+        Coin = coin;
+    }
+    public int Coin;
+}
+[Serializable]
+public class UserDataSaving
+{
+    public string data;
+}
+
