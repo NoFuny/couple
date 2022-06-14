@@ -25,19 +25,14 @@ public class SceneManagerLvl : MonoBehaviour
     {
         _doubleObj = FindObjectsOfType<TypeObject>().Length / 2;
         audio = FindObjectOfType<AudioSource>();
-        SDK = YandexSDK.Instance;
-        SDK.RewardGet += onClickAddTime;
-        ShowCommon();
+        SDK = FindObjectOfType<YandexSDK>();
+        
+        SDK.onRewardedAdReward += Reward;
+        SDK.ShowInterstitial();
+
     }
 
-    public void ShowCommon()
-    {
-        SDK.ShowCommonAdvertisment();
-    }
-    public void ShowReward()
-    {
-        SDK.ShowRewardAdvertisment();
-    }
+
     void Update()
     {
         TimerGame();
@@ -80,10 +75,13 @@ public class SceneManagerLvl : MonoBehaviour
         endGame.SetActive(viewWindow);
     }
 
-    public void onClickAddTime()
+    public void Reward(string param)
     {
+        if (param == "add")
+        {
             timer += 60;
             EndGameWindow(false);
+        }
     }
     public void ChekTrue()
     {

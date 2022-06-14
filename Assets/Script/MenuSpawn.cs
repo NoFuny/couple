@@ -10,12 +10,17 @@ public class MenuSpawn : MonoBehaviour
     [SerializeField] private Transform pointSpawn;
     [SerializeField] private Button[] lvlButton;
     [SerializeField] AudioClip clickSound;
+    AudioSource audio;
+    public AudioClip soundMenu;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         StartCoroutine(Spawn());
         int nowLvl = PlayerPrefs.GetInt("SaveLvl");
+        audio = FindObjectOfType<AudioSource>();
+        audio.Play();
         for (int i = 1; i <= nowLvl; i++)
         {
             lvlButton[i].interactable = true;

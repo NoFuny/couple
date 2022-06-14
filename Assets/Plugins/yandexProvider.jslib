@@ -1,31 +1,35 @@
 mergeInto(LibraryManager.library, {
+  InitPurchases: function() {
+    initPayments();
+  },
 
-  Auth: function() {
+  Purchase: function(id) {
+    buy(id);
+  },
+
+  AuthenticateUser: function() {
     auth();
   },
 
-  GetData: function() {
+  GetUserData: function() {
     getUserData();
   },
-  
-  SetData : function(data){
-    setUserData(UTF8ToString(data));
-  },
 
-  ShowCommonADV: function () {
+  ShowFullscreenAd: function () {
     showFullscrenAd();
   },
 
-  ShowRewardADV: function() {
-    showRewardedAd();
+  ShowRewardedAd: function(placement) {
+    showRewardedAd(placement);
+    return placement;
   },
-  
-  GetLeaderBoardEntries: function(){
-    GetLeaderBoardEntries();
-  },
-  
-  SetLeaderBoard: function(score){
-    SetLeaderBoard(score);
-  }
 
+  OpenWindow: function(link){
+    var url = Pointer_stringify(link);
+      document.onmouseup = function()
+      {
+        window.open(url);
+        document.onmouseup = null;
+      }
+  }
 });

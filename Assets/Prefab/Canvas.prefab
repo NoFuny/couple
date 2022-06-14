@@ -627,7 +627,7 @@ MonoBehaviour:
   _doubleObj: 22
   clickSound: {fileID: 8300000, guid: 1322df7c304ed79498b616d80070d69c, type: 3}
   noSound: {fileID: 8300000, guid: 23870cfd8dda0d54a8cc5340d8b17b63, type: 3}
-  menuSound: {fileID: 8300000, guid: a6907b84563240947a87177e24009c59, type: 3}
+  menuSound: {fileID: 8300000, guid: 1322df7c304ed79498b616d80070d69c, type: 3}
 --- !u!82 &8692533920383884638
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1136,16 +1136,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3724983734855705728}
-        m_TargetAssemblyTypeName: SceneManagerLvl, Assembly-CSharp
-        m_MethodName: ShowReward
-        m_Mode: 1
+      - m_Target: {fileID: 8216968079753354792}
+        m_TargetAssemblyTypeName: YandexSDK, Assembly-CSharp
+        m_MethodName: ShowRewarded
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: addTime
+          m_StringArgument: add
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &3724983736071139372
@@ -2134,7 +2134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6830576356079017499}
-  - component: {fileID: 6173552553643151274}
+  - component: {fileID: 8216968079753354792}
   m_Layer: 0
   m_Name: YandexSDK
   m_TagString: Untagged
@@ -2156,7 +2156,7 @@ Transform:
   m_Father: {fileID: 3724983734855705732}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6173552553643151274
+--- !u!114 &8216968079753354792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2165,7 +2165,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7144127293651115680}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a1668229686a534ab22bdfc35b055d4, type: 3}
+  m_Script: {fileID: 11500000, guid: c32be111fd662c24385d3df83f19f388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8230023059246935156
